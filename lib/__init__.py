@@ -2,6 +2,7 @@
 
 import re
 import sys
+from collections import defaultdict
 
 from os import unlink
 from json import loads, dumps
@@ -56,14 +57,14 @@ def build():
 
 def install():
   assert isdir(config["path"]), "Config.path does not point to your mapbox projects directory; please fix and re-run"
-  sanitized_name = re.sub("[^\w]", "", config["name"])
+  sanitized_name = re.sub(r"[^\w]", "", config["name"])
   output_dir = join(config["path"], sanitized_name)
-  print "installing to %s" % output_dir
+  print("installing to %s" % output_dir)
   copy_tree("build", output_dir)
 
 def pull():
   #copy the project from mapbox to osm-bright
-  sanitized_name = re.sub("[^\w]", "", config["name"])
+  sanitized_name = re.sub(r"[^\w]", "", config["name"])
   output_dir = join(config["path"], sanitized_name)
   copy_tree(output_dir, "osm-bright")
 
